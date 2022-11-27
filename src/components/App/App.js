@@ -1,15 +1,15 @@
-import './App.scss';
+import { useState } from 'react';import './App.scss';
 import Header from '../header/header';
 import Footer from '../footer/footer';
-import { useState } from 'react';
+import Card from '../card/card';
 
 function App() {
 
   const [boards, setBoards] = useState([
-    {id: 1, title: 'Текущая задача', items: [{id: 1, title: 'Создать проект', descr: 'создание структуры'}, {id: 2, title: 'Создать проект', descr: 'создание структуры'}]},
-    {id: 2, title: 'Выполняемые задачи', items: [{id: 1, title: 'Стилизовать кнопку', descr: 'сделать её переиспользуемой'}, {id: 2, title: 'Функции кнопки', descr: 'создать функции для кнопки'}]},
-    {id: 3, title: 'Проверка', items: [{id: 1, title: 'Проверка кнопки', descr: 'протестировать функционал кнопки'}, {id: 2, title: 'Проверка кнопки', descr: 'протестировать функционал кнопки'}]},
-    {id: 4, title: 'Выполнено', items: [{id: 1, title: 'Кнопка', descr: 'реализована кнопка'}, {id: 2, title: 'Кнопка', descr: 'реализована кнопка'}]}
+    {id: 10001, title: 'Текущая задача', items: [{id: 1, title: 'Создать проект', descr: 'создание структуры'}, {id: 2, title: 'Создать проект', descr: 'создание структуры'}]},
+    {id: 20002, title: 'Выполняемые задачи', items: [{id: 1, title: 'Стилизовать кнопку', descr: 'сделать её переиспользуемой'}, {id: 2, title: 'Функции кнопки', descr: 'создать функции для кнопки'}]},
+    {id: 30003, title: 'Проверка', items: [{id: 1, title: 'Проверка кнопки', descr: 'протестировать функционал кнопки'}, {id: 2, title: 'Проверка кнопки', descr: 'протестировать функционал кнопки'}]},
+    {id: 40004, title: 'Выполнено', items: [{id: 1, title: 'Кнопка', descr: 'реализована кнопка'}, {id: 2, title: 'Кнопка', descr: 'реализована кнопка'}]}
   ]);
 
   const [currentBoard, setCurrentBoard] = useState(null);
@@ -21,15 +21,9 @@ function App() {
       e.target.style.boxShadow = '0 4px 3px gray';
     }
   }
-  const dargLeaveHandler = (e) => {
-    e.target.style.boxShadow = 'none';
-  }
   const dargStartHandler = (e, board, item) => {
     setCurrentBoard(board);
     setCurrentItem(item);
-  }
-  const dragEndHandler = (e) => {
-    e.target.style.boxShadow = 'none';
   }
   const dropHandler = (e, board, item) => {
     e.preventDefault();
@@ -64,29 +58,40 @@ function App() {
     e.target.style.boxShadow = 'none';
   }
 
+  const [cardTitle, setCardTitle] = useState('');
+  const [cardDescr, setCardDescr] = useState('');
+  const addNewCard = (e) => {
+    e.preventDefault();
+    const newCard = {
+      id: Date.now(),
+      cardTitle,
+      cardDescr
+    }
+    setBoards([...setBoards, newCard]);
+    setCardDescr('');
+    setCardTitle('');
+  }
+
   return (
     <div className="app">
       <Header />
+      <div className='app__modal'>
+        <input placeholder='Название задачи' className='app_input' value={cardTitle} onChange={e => setCardTitle(e.target.value)} />
+        <input placeholder='Описание задачи' className='app_input' value={cardDescr} onChange={e => setCardDescr(e.target.value)} />
+        <button onClick={addNewCard} className='app__button'>Добавить задачу</button>
+      </div>
       <div className='app__board'>
         {boards.map( board => 
           <div 
           onDragOver = {(e) => dragOverHandler(e)}
           onDrop = {(e) => dropCardHandler(e, board)}
-          className='board'>
+          className='board'
+          key={board.id}>
             <h2 className='board__title'>{board.title}</h2>
             {board.items.map(item =>
-              <div 
-              onDragOver = {(e) => dragOverHandler(e)}
-              onDragLeave = {e => dargLeaveHandler(e)}
-              onDragStart = {(e) => dargStartHandler(e, board, item)}
-              onDragEnd = {(e) => dragEndHandler(e)}
-              onDrop = {(e) => dropHandler(e, board, item)}
-              draggable={true}
-              className='card'>
-                <h3 className='card__title'>{item.title}</h3>
-                <p className='card__descr'>{item.descr}</p>
-              </div>
-              )}
+            <Card item={item} dargStartHandler={(e) => dargStartHandler(e, board, item)}
+            dropHandler={(e) => dropHandler(e, board, item)} key={item.id}/>
+            )}
           </div>)}
       </div>
       <Footer />
