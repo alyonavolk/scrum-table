@@ -26,6 +26,7 @@ function App() {
   }
   const dropHandler = (e, board, item) => {
     e.preventDefault();
+    e.stopPropagation();
     const currentIndex = currentBoard.items.indexOf(currentItem);
     currentBoard.items.splice(currentIndex, 1);
     const dropIndex = board.items.indexOf(item);
@@ -59,31 +60,44 @@ function App() {
 
   const [cardTitle, setCardTitle] = useState('');
   const [cardDescr, setCardDescr] = useState('');
-  const addNewCard = (e, board) => {
-    e.preventDefault();
+  // const addNewCard = (e, board) => {
+  //   e.preventDefault();
+  //   const newCard = {
+  //     id: Date.now(),
+  //     cardTitle,
+  //     cardDescr
+  //   }
+  //   board.items.push(newCard);
+    // setBoards(boards.map(x => {
+    //   if (x.id === board.id){
+    //     return board;
+    //   }
+    //   if (x.id === currentBoard.id){
+    //     return currentBoard;
+    //   }
+    //   return x
+    // }))
+  //   //setBoards([...setBoards['items'], newCard]);
+  //   setCardDescr('');
+  //   setCardTitle('');
+  // }
+  const addNewItem = item => {
     const newCard = {
       id: Date.now(),
       cardTitle,
       cardDescr
     }
-    board.items.push(newCard);
-    setBoards(boards.map(x => {
-      if (x.id === board.id){
-        return board;
-      }
-      if (x.id === currentBoard.id){
-        return currentBoard;
-      }
-      return x
-    }))
-    //setBoards([...setBoards['items'], newCard]);
-    setCardDescr('');
-    setCardTitle('');
+    setCurrentBoard([...boards, boards[0].items.push(newCard)]);
   }
 
   return (
     <div className="app">
       <Header />
+            <div className='app__modal'>
+              <input placeholder='Название задачи' className='app_input' value={cardTitle} onChange={e => setCardTitle(e.target.value)} />
+              <input placeholder='Описание задачи' className='app_input' value={cardDescr} onChange={e => setCardDescr(e.target.value)} />
+              <button onClick={() => addNewItem()} className='app__button'>Добавить задачу</button>
+            </div>
       <div className='app__board'>
         {boards.map( board => 
           <div 
@@ -92,12 +106,6 @@ function App() {
           className='board'
           key={board.id}>
             <h2 className='board__title'>{board.title}</h2>
-            
-          <div className='app__modal'>
-            <input placeholder='Название задачи' className='app_input' value={cardTitle} onChange={e => setCardTitle(e.target.value)} />
-            <input placeholder='Описание задачи' className='app_input' value={cardDescr} onChange={e => setCardDescr(e.target.value)} />
-            <button onClick={(e) => addNewCard(e, board)} className='app__button'>Добавить задачу</button>
-          </div>
             {board.items.map(item =>
             <Card item={item} dragStartHandler={(e) => dragStartHandler(e, board, item)}
             dropHandler={(e) => dropHandler(e, board, item)} key={item.id}/>

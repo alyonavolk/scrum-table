@@ -7,7 +7,7 @@ const Header = () => {
                 Scrum-table
             </div>
             <div className='header_post'>
-                <button onChange=''>Создать задачу</button>
+                <button>Создать задачу</button>
             </div>
         </div>
     )
