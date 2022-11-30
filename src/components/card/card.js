@@ -26,6 +26,7 @@ const Card = (props) => {
         className='card'>
           <h3 className='card__title'>{props.item.title}</h3>
           <p className='card__descr'>{props.item.descr}</p>
+          <button onClick={props.delCard}>Удалить</button>
         </div>
     );
 };

@@ -87,8 +87,40 @@ function App() {
       cardTitle,
       cardDescr
     }
+    console.log(newCard);
     setCurrentBoard([...boards, boards[0].items.push(newCard)]);
+    console.log(boards);
   }
+  const delCard = (id) => {
+    for (const column of boards) {
+			const delItem = column.items.find(it => it.id === id);
+
+			if (delItem) {
+				column.items.splice(column.items.indexOf(delItem), 1);
+			}
+		}
+    console.log(boards);
+  }
+  // const delCard = (board, item) => {
+  //   const currentId = item.id;
+  //   console.log(currentId);
+  //   board.items.forEach(br => {
+  //     if (br.id === currentId){
+  //       currentBoard.items.splice(br, 1)
+  //     }
+  //   })
+  //   //currentBoard.items.splice(currentId, 1);
+  //   setBoards(boards.map(x => {
+  //     if (x.id === board.id){
+  //       return board;
+  //     }
+  //     if (x.id === currentBoard.id){
+  //       return currentBoard;
+  //     }
+  //     return x
+  //   }))
+  //   console.log(boards);
+  // }
 
   return (
     <div className="app">
@@ -108,7 +140,8 @@ function App() {
             <h2 className='board__title'>{board.title}</h2>
             {board.items.map(item =>
             <Card item={item} dragStartHandler={(e) => dragStartHandler(e, board, item)}
-            dropHandler={(e) => dropHandler(e, board, item)} key={item.id}/>
+            dropHandler={(e) => dropHandler(e, board, item)} 
+            delCard={(e) => delCard(item.id)} key={item.id}/>
             )}
           </div>)}
       </div>
