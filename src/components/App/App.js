@@ -4,12 +4,11 @@ import Footer from '../footer/footer';
 import Card from '../card/card';
 
 function App() {
-
   const [boards, setBoards] = useState([
-    {id: 10001, title: 'Текущая задача', items: [{id: 1, title: 'Создать проект', descr: 'создание структуры'}, {id: 2, title: 'Создать проект', descr: 'создание структуры'}]},
-    {id: 20002, title: 'Выполняемые задачи', items: [{id: 1, title: 'Стилизовать кнопку', descr: 'сделать её переиспользуемой'}, {id: 2, title: 'Функции кнопки', descr: 'создать функции для кнопки'}]},
-    {id: 30003, title: 'Проверка', items: [{id: 1, title: 'Проверка кнопки', descr: 'протестировать функционал кнопки'}, {id: 2, title: 'Проверка кнопки', descr: 'протестировать функционал кнопки'}]},
-    {id: 40004, title: 'Выполнено', items: [{id: 1, title: 'Кнопка', descr: 'реализована кнопка'}, {id: 2, title: 'Кнопка', descr: 'реализована кнопка'}]}
+    {id: 10001, title: 'Текущая задача', items: [{id: 110001, title: 'Создать проект', descr: 'создание структуры'}, {id: 120002, title: 'Создать проект', descr: 'создание структуры'}]},
+    {id: 20002, title: 'Выполняемые задачи', items: [{id: 210001, title: 'Стилизовать кнопку', descr: 'сделать её переиспользуемой'}, {id: 220002, title: 'Функции кнопки', descr: 'создать функции для кнопки'}]},
+    {id: 30003, title: 'Проверка', items: [{id: 310001, title: 'Проверка кнопки', descr: 'протестировать функционал кнопки'}, {id: 320002, title: 'Проверка кнопки', descr: 'протестировать функционал кнопки'}]},
+    {id: 40004, title: 'Выполнено', items: [{id: 410001, title: 'Кнопка', descr: 'реализована кнопка'}, {id: 420002, title: 'Кнопка', descr: 'реализована кнопка'}]}
   ]);
 
   const [currentBoard, setCurrentBoard] = useState(null);
@@ -21,7 +20,7 @@ function App() {
       e.target.style.boxShadow = '0 4px 3px gray';
     }
   }
-  const dargStartHandler = (e, board, item) => {
+  const dragStartHandler = (e, board, item) => {
     setCurrentBoard(board);
     setCurrentItem(item);
   }
@@ -60,14 +59,24 @@ function App() {
 
   const [cardTitle, setCardTitle] = useState('');
   const [cardDescr, setCardDescr] = useState('');
-  const addNewCard = (e) => {
+  const addNewCard = (e, board) => {
     e.preventDefault();
     const newCard = {
       id: Date.now(),
       cardTitle,
       cardDescr
     }
-    setBoards([...setBoards, newCard]);
+    board.items.push(newCard);
+    setBoards(boards.map(x => {
+      if (x.id === board.id){
+        return board;
+      }
+      if (x.id === currentBoard.id){
+        return currentBoard;
+      }
+      return x
+    }))
+    //setBoards([...setBoards['items'], newCard]);
     setCardDescr('');
     setCardTitle('');
   }
@@ -75,11 +84,6 @@ function App() {
   return (
     <div className="app">
       <Header />
-      <div className='app__modal'>
-        <input placeholder='Название задачи' className='app_input' value={cardTitle} onChange={e => setCardTitle(e.target.value)} />
-        <input placeholder='Описание задачи' className='app_input' value={cardDescr} onChange={e => setCardDescr(e.target.value)} />
-        <button onClick={addNewCard} className='app__button'>Добавить задачу</button>
-      </div>
       <div className='app__board'>
         {boards.map( board => 
           <div 
@@ -88,8 +92,14 @@ function App() {
           className='board'
           key={board.id}>
             <h2 className='board__title'>{board.title}</h2>
+            
+          <div className='app__modal'>
+            <input placeholder='Название задачи' className='app_input' value={cardTitle} onChange={e => setCardTitle(e.target.value)} />
+            <input placeholder='Описание задачи' className='app_input' value={cardDescr} onChange={e => setCardDescr(e.target.value)} />
+            <button onClick={(e) => addNewCard(e, board)} className='app__button'>Добавить задачу</button>
+          </div>
             {board.items.map(item =>
-            <Card item={item} dargStartHandler={(e) => dargStartHandler(e, board, item)}
+            <Card item={item} dragStartHandler={(e) => dragStartHandler(e, board, item)}
             dropHandler={(e) => dropHandler(e, board, item)} key={item.id}/>
             )}
           </div>)}

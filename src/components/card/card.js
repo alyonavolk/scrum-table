@@ -8,7 +8,7 @@ const Card = (props) => {
         e.target.style.boxShadow = '0 4px 3px gray';
       }
     }
-    const dargLeaveHandler = (e) => {
+    const dragLeaveHandler = (e) => {
       e.target.style.boxShadow = 'none';
     }
     const dragEndHandler = (e) => {
@@ -18,8 +18,8 @@ const Card = (props) => {
     return (
     <div 
         onDragOver = {(e) => dragOverHandler(e)}
-        onDragLeave = {e => dargLeaveHandler(e)}
-        onDragStart = {props.dargStartHandler}
+        onDragLeave = {e => dragLeaveHandler(e)}
+        onDragStart = {props.dragStartHandler}
         onDragEnd = {(e) => dragEndHandler(e)}
         onDrop = {props.dropHandler}
         draggable={true} key={props.item.id}
