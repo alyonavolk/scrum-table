@@ -6,9 +6,6 @@ const Header = () => {
             <div className='header__logo'>
                 Scrum-table
             </div>
-            <div className='header_post'>
-                <button>Создать задачу</button>
-            </div>
         </div>
     )
 }

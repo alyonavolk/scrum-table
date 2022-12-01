@@ -25,9 +25,11 @@ const Card = (props) => {
         onDrop = {props.dropHandler}
         draggable={true} key={props.item.id}
         className='card'>
-          <h3 className='card__title'>{props.item.title}</h3>
-          <p className='card__descr'>{props.item.descr}</p>
-          <button onClick={props.delCard}>Удалить</button>
+          <div>
+            <h3 className='card__title'>{props.item.title}</h3>
+            <p className='card__descr'>{props.item.descr}</p>
+          </div>
+          <div className='card__del'><button onClick={props.delCard}>Уд</button></div>
         </div>
     );
 };

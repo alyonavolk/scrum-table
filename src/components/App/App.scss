@@ -1,6 +1,9 @@
+@import '../../style/colors.scss';
+
 .app {
-  height: 930px;
-  width: 1400px;
+  background-color: $light-yellow;
+  max-height: 937px;
+  width: 100%;
   margin: 0 auto;
   &__board{
     margin: 0 auto;
@@ -9,12 +12,6 @@
     display: flex;
     gap: 30px;
     justify-content: center;
-  }
-  &__modal{
-    display: flex;
-    flex-direction: column;
-    height: 100px;
-    max-width: 400px;
   }
 }
 
