@@ -81,24 +81,45 @@ function App() {
   //   setCardDescr('');
   //   setCardTitle('');
   // }
-  const addNewItem = item => {
+  const addNewItem = (board) => {
     const newCard = {
       id: Date.now(),
-      cardTitle,
-      cardDescr
+      title: cardTitle,
+      descr: cardDescr
     }
     console.log(newCard);
-    setCurrentBoard([...boards, boards[0].items.push(newCard)]);
-    console.log(boards);
+    const id = boards.indexOf(board);
+    //setBoards([...boards[id].items, newCard]);
+    //boards[id].items.push(newCard);
+    setCurrentBoard([...boards, boards[id].items.push(newCard)]);
+    console.log(boards[id].items);
+    setBoards(boards.map(x => {
+      if (x.id === board.id){
+        return board;
+      }
+      if (x.id === currentBoard.id){
+        return currentBoard;
+      }
+      return x
+    }))
   }
-  const delCard = (id) => {
+  const delCard = (id, board) => {
     for (const column of boards) {
 			const delItem = column.items.find(it => it.id === id);
-
 			if (delItem) {
+        console.log(column.items.indexOf(delItem));
 				column.items.splice(column.items.indexOf(delItem), 1);
 			}
 		}
+    setBoards(boards.map(x => {
+      if (x.id === board.id){
+        return board;
+      }
+      if (x.id === currentBoard.id){
+        return currentBoard;
+      }
+      return x
+    }))
     console.log(boards);
   }
   // const delCard = (board, item) => {
@@ -125,11 +146,6 @@ function App() {
   return (
     <div className="app">
       <Header />
-            <div className='app__modal'>
-              <input placeholder='Название задачи' className='app_input' value={cardTitle} onChange={e => setCardTitle(e.target.value)} />
-              <input placeholder='Описание задачи' className='app_input' value={cardDescr} onChange={e => setCardDescr(e.target.value)} />
-              <button onClick={() => addNewItem()} className='app__button'>Добавить задачу</button>
-            </div>
       <div className='app__board'>
         {boards.map( board => 
           <div 
@@ -138,10 +154,15 @@ function App() {
           className='board'
           key={board.id}>
             <h2 className='board__title'>{board.title}</h2>
+            <div className='app__modal'>
+              <input placeholder='Название задачи' className='app_input' value={cardTitle} onChange={e => setCardTitle(e.target.value)} />
+              <input placeholder='Описание задачи' className='app_input' value={cardDescr} onChange={e => setCardDescr(e.target.value)} />
+              <button onClick={() => addNewItem(board)} className='app__button'>Добавить задачу</button>
+            </div>
             {board.items.map(item =>
             <Card item={item} dragStartHandler={(e) => dragStartHandler(e, board, item)}
             dropHandler={(e) => dropHandler(e, board, item)} 
-            delCard={(e) => delCard(item.id)} key={item.id}/>
+            delCard={(e) =>delCard(item.id, board)} key={item.id}/>
             )}
           </div>)}
       </div>
