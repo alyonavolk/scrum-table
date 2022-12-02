@@ -112,12 +112,12 @@ function App() {
 
   return (
     <div className="app">
+    <div className={`app__modal ${modal ? 'app__modal_active' : 'app__modal_close'}`} onClick={() => setModal(false)}>
+      <Modal addNewItem={() => addNewItem(modalBoard)}  close={() => setModal(false)} content={(e) => e.stopPropagation()}
+        cardTitle={cardTitle} cardDescr={cardDescr} 
+        setCardTitle={e => setCardTitle(e.target.value)} setCardDescr={e => setCardDescr(e.target.value)}/>
+    </div>
       <Header />
-      <div className={modal ? 'app__modal_active' : 'app__modal_close'}>
-        <Modal addNewItem={() => addNewItem(modalBoard)} 
-          cardTitle={cardTitle} cardDescr={cardDescr} 
-          setCardTitle={e => setCardTitle(e.target.value)} setCardDescr={e => setCardDescr(e.target.value)}/>
-      </div>
       <div className='app__board'>
         {boards.map( board => 
           <div 
@@ -125,8 +125,10 @@ function App() {
           onDrop = {(e) => dropCardHandler(e, board)}
           className='board'
           key={board.id}>
-            <h2 className='board__title'>{board.title}</h2>
-            <button className='board__addButton' onClick={() => addModal(board)}>+</button>
+            <div className='board__header'>
+              <h2 className='board__title'>{board.title}</h2>
+              <button className='board__addButton' onClick={() => addModal(board)}>&#9998;</button>
+            </div>
             {board.items.map(item =>
             <Card item={item} dragStartHandler={(e) => dragStartHandler(e, board, item)}
             dropHandler={(e) => dropHandler(e, board, item)} 

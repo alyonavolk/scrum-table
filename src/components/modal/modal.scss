@@ -3,13 +3,51 @@
 .modal{
     display: flex;
     flex-direction: column;
-    height: 100px;
-    max-width: 400px;
+    height: 150px;
+    min-width: 400px;
+    gap: 20px;
     &_back{
-        position: absolute;
-        z-index: 100;
+        width: 500px;
+        height: 200px;
         display: flex;
         align-items: center;
         justify-content: center;
+        background-color: $pudra;
+    }
+    &__input {
+        width: 100%;
+        padding: 10px;
+        border-radius: 100px;
+        border: none;
+        &::placeholder{
+            color:$pudra;
+        }
+        &:focus, &:hover{
+            outline: none;
+        }
+        &:focus{
+            outline: 0.5px solid $pudra;
+        }
+    }
+    &__button{
+        cursor: pointer;
+        min-width: 200px;
+        min-height: 30px;
+        border-radius: 100px;
+        margin: 0 auto;
+        border: none;
+        background-color: $macaroni;
+        &:hover{
+            background-color: $dark-pudra;
+        }
+        &_close{
+            cursor: pointer;
+            border: none;
+            background-color: transparent;
+            font-size: 16px;
+            &:hover{
+                color: $coral;
+            }
+        }
     }
   }

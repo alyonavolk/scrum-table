@@ -13,11 +13,21 @@
     gap: 30px;
     justify-content: center;
   }
-  &__modal_active{
-    display: block;
-  }
-  &__modal_close{
-    display: none;
+  &__modal{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(185, 83, 83, 0.6);
+    backdrop-filter: brgba(151, 50, 50, 0.6);
+    &_active{
+      display: block;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    &_close{
+      display: none;
+    }
   }
 }
 
@@ -32,9 +42,22 @@
     padding: 20px;
   }
   overflow: scroll;
-  @supports (scrollbar-gutter: stable) {
-  overflow: auto;    
-  scrollbar-gutter: stable;  
+  scrollbar-width: thin;
+  scrollbar-color: $pudra;
+  overflow: auto;
+  scrollbar-gutter: stable;
+  &__header{
+    display: flex;
+    justify-content: space-between;
+  }
+  &__addButton{
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    font-size: 22px;
+    &:hover{
+        color: $coral;
+    }
   }
 }
 
