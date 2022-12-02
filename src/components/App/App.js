@@ -68,6 +68,7 @@ function App() {
       title: cardTitle,
       descr: cardDescr
     }
+    console.log(board);
     const id = boards.indexOf(board);
     setCurrentBoard([...boards, boards[id].items.push(newCard)]);
     setBoards(boards.map(x => {
@@ -81,6 +82,15 @@ function App() {
     }))
     setCardDescr('');
     setCardTitle('');
+    setModal(false);
+  }
+  const [modalBoard, setModalBoard] = useState();
+  const [modal, setModal] = useState(false);
+  const addModal = (board) => {
+    setCurrentBoard(board);
+    setModal(true);
+    setModalBoard(board);
+    console.log(modalBoard);
   }
   const delCard = (id, board) => {
     for (const column of boards) {
@@ -103,6 +113,11 @@ function App() {
   return (
     <div className="app">
       <Header />
+      <div className={modal ? 'app__modal_active' : 'app__modal_close'}>
+        <Modal addNewItem={() => addNewItem(modalBoard)} 
+          cardTitle={cardTitle} cardDescr={cardDescr} 
+          setCardTitle={e => setCardTitle(e.target.value)} setCardDescr={e => setCardDescr(e.target.value)}/>
+      </div>
       <div className='app__board'>
         {boards.map( board => 
           <div 
@@ -111,9 +126,7 @@ function App() {
           className='board'
           key={board.id}>
             <h2 className='board__title'>{board.title}</h2>
-          <Modal addNewItem={() => addNewItem(board)} 
-          cardTitle={cardTitle} cardDescr={cardDescr} 
-          setCardTitle={e => setCardTitle(e.target.value)} setCardDescr={e => setCardDescr(e.target.value)}/>
+            <button className='board__addButton' onClick={() => addModal(board)}>+</button>
             {board.items.map(item =>
             <Card item={item} dragStartHandler={(e) => dragStartHandler(e, board, item)}
             dropHandler={(e) => dropHandler(e, board, item)} 
