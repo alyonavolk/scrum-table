@@ -3,21 +3,37 @@
 .modal{
     display: flex;
     flex-direction: column;
-    height: 150px;
-    min-width: 400px;
+    height: 250px;
+    width: 400px;
     gap: 20px;
+    margin-top: 10px;
     &_back{
         width: 500px;
-        height: 200px;
+        height: 300px;
         display: flex;
-        align-items: center;
+        padding: 30px 0;
         justify-content: center;
-        background-color: $pudra;
+        background-color: $peach;
+        gap: 10px;
+        border-radius: 10px;
+    }
+    textarea{
+        height: 80px;
+        border-radius: 30px;
+        padding: 15px;
+        max-width: 400px;
+    }
+    input {
+        border-radius: 100px;
+    }
+    p {
+        font-size: 18px;
+        color: $cherrywood;
+        text-align: center;
     }
     &__input {
         width: 100%;
         padding: 10px;
-        border-radius: 100px;
         border: none;
         &::placeholder{
             color:$pudra;
@@ -30,15 +46,19 @@
         }
     }
     &__button{
+        font-size: 15px;
+        color: $cherrywood;
+        margin-top: 50px;
         cursor: pointer;
         min-width: 200px;
-        min-height: 30px;
+        padding: 8px 0;
         border-radius: 100px;
         margin: 0 auto;
         border: none;
         background-color: $macaroni;
         &:hover{
             background-color: $dark-pudra;
+            color: $macaroni;
         }
         &_close{
             cursor: pointer;
@@ -50,4 +70,4 @@
             }
         }
     }
-  }
+}

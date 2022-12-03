@@ -18,7 +18,7 @@ function App() {
   const dragOverHandler = (e) => {
     e.preventDefault();
     if (e.target.className === 'card'){
-      e.target.style.boxShadow = '0 4px 3px gray';
+      e.target.style.boxShadow = '0px 1px 30px #f5bf8d';
     }
   }
   const dragStartHandler = (e, board, item) => {
@@ -56,7 +56,7 @@ function App() {
       }
       return x
     }))
-    e.target.style.boxShadow = 'none';
+    //e.target.style.boxShadow = 'none';
   }
 
   const [cardTitle, setCardTitle] = useState('');
@@ -68,7 +68,6 @@ function App() {
       title: cardTitle,
       descr: cardDescr
     }
-    console.log(board);
     const id = boards.indexOf(board);
     setCurrentBoard([...boards, boards[id].items.push(newCard)]);
     setBoards(boards.map(x => {

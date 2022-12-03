@@ -4,5 +4,12 @@
     margin: auto;
     display: flex;
     justify-content: flex-start;
-    border: 1px solid black;
+
+    
+    color: #f5bf8d;
+    font-size: 30px;
+    font-weight: bold;
+    &__logo{
+        margin: auto;
+    }
 }

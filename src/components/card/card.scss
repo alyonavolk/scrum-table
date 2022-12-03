@@ -5,17 +5,28 @@
     justify-content: space-between;
     max-width: 350px;
     margin: 20px auto;
-    border: 1px solid black;
+    border: 1px solid $light-yellow;
     border-radius: 10px;
     padding: 10px;
     white-space: pre-line;
-
+    background-color: $cherrywood;
+    color: $macaroni;
+    box-shadow: 0px 1px 30px $macaroni;
+    &:hover{
+        background-color: $peach;
+        color: $cherrywood;
+        cursor: pointer;
+        button{
+            color: $cherrywood;
+        }
+    }
     &__del{
         button{
             cursor: pointer;
             border: none;
             background-color: transparent;
-            font-size: 16px;
+            font-size: 20px;
+            color: $macaroni;
             &:hover{
                 color: $coral;
             }

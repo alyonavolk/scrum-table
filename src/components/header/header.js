@@ -4,7 +4,7 @@ const Header = () => {
     return(
         <div className='header'>
             <div className='header__logo'>
-                Scrum-table
+                Канбан на следующий год
             </div>
         </div>
     )
