@@ -116,7 +116,9 @@ function App() {
         cardTitle={cardTitle} cardDescr={cardDescr} 
         setCardTitle={e => setCardTitle(e.target.value)} setCardDescr={e => setCardDescr(e.target.value)}/>
     </div>
+    <div className='app__header'>
       <Header />
+    </div>
       <div className='app__board'>
         {boards.map( board => 
           <div 
@@ -126,16 +128,20 @@ function App() {
           key={board.id}>
             <div className='board__header'>
               <h2 className='board__title'>{board.title}</h2>
-              <button className='board__addButton' onClick={() => addModal(board)}>&#9998;</button>
+              { board.id === 10001 ? <button className='board__addButton' onClick={() => addModal(board)}>&#9998;</button> : null}
             </div>
-            {board.items.map(item =>
-            <Card item={item} dragStartHandler={(e) => dragStartHandler(e, board, item)}
-            dropHandler={(e) => dropHandler(e, board, item)} 
-            delCard={(e) =>delCard(item.id, board)} key={item.id}/>
-            )}
+            <div className='board__main'>
+              {board.items.map(item =>
+              <Card item={item} dragStartHandler={(e) => dragStartHandler(e, board, item)}
+              dropHandler={(e) => dropHandler(e, board, item)} 
+              delCard={(e) =>delCard(item.id, board)} key={item.id}/>
+              )}
+            </div>
           </div>)}
       </div>
-      <Footer />
+      <div className='app__footer'>
+        <Footer />
+      </div>
     </div>
   );
 }
