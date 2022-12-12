@@ -105,7 +105,7 @@ function App() {
       if (x.id === currentBoard.id){
         return currentBoard;
       }
-      return x
+      return x;
     }))
   }
 
